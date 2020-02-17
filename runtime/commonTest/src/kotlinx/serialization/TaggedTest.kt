@@ -5,6 +5,7 @@
 package kotlinx.serialization
 
 import kotlinx.serialization.CompositeDecoder.Companion.READ_DONE
+import kotlinx.serialization.internal.*
 import kotlinx.serialization.test.isJs
 import kotlin.test.Test
 import kotlin.test.assertEquals
