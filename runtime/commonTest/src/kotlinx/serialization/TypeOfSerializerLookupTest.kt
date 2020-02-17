@@ -4,6 +4,7 @@
 
 package kotlinx.serialization
 
+import kotlinx.serialization.builtins.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.test.isJs
 import kotlin.reflect.typeOf
@@ -25,7 +26,7 @@ class TypeOfSerializerLookupTest {
     fun testPrimitive() {
         val token = typeOf<Int>()
         val serial = serializer(token)
-        assertSame(IntSerializer as KSerializer<*>, serial)
+        assertSame(Int.serializer() as KSerializer<*>, serial)
         assertSerializedWithType("42", 42)
     }
 
@@ -97,7 +98,7 @@ class TypeOfSerializerLookupTest {
     fun testCustomGeneric() = noJs {
         val intBox = Box(42)
         val intBoxSerializer = serializer<Box<Int>>()
-        assertEquals(Box.serializer(IntSerializer).descriptor, intBoxSerializer.descriptor)
+        assertEquals(Box.serializer(Int.serializer()).descriptor, intBoxSerializer.descriptor)
         assertSerializedWithType("""{boxed:42}""", intBox)
         val dataBox = Box(StringData("foo"))
         assertSerializedWithType("""{boxed:{data:foo}}""", dataBox)
