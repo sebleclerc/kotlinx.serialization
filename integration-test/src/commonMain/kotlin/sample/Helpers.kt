@@ -5,20 +5,21 @@
 package sample
 
 import kotlinx.serialization.*
+import kotlinx.serialization.builtins.*
 
-class KeyValueOutput(val sb: StringBuilder) : ElementValueEncoder() {
-    override fun beginStructure(desc: SerialDescriptor, vararg typeParams: KSerializer<*>): CompositeEncoder {
+class KeyValueOutput(val sb: StringBuilder) : AbstractEncoder() {
+    override fun beginStructure(descriptor: SerialDescriptor, vararg typeSerializers: KSerializer<*>): CompositeEncoder {
         sb.append('{')
         return this
     }
 
-    override fun endStructure(desc: SerialDescriptor) {
+    override fun endStructure(descriptor: SerialDescriptor) {
         sb.append('}')
     }
 
-    override fun encodeElement(desc: SerialDescriptor, index: Int): Boolean {
+    override fun encodeElement(descriptor: SerialDescriptor, index: Int): Boolean {
         if (index > 0) sb.append(", ")
-        sb.append(desc.getElementName(index));
+        sb.append(descriptor.getElementName(index));
         sb.append(':')
         return true
     }
@@ -40,20 +41,20 @@ class KeyValueOutput(val sb: StringBuilder) : ElementValueEncoder() {
     override fun encodeChar(value: Char) = encodeString(value.toString())
 }
 
-class KeyValueInput(val inp: Parser) : ElementValueDecoder() {
-    override fun beginStructure(desc: SerialDescriptor, vararg typeParams: KSerializer<*>): CompositeDecoder {
+class KeyValueInput(val inp: Parser) : AbstractDecoder() {
+    override fun beginStructure(descriptor: SerialDescriptor, vararg typeParams: KSerializer<*>): CompositeDecoder {
         inp.expectAfterWhiteSpace('{')
         return this
     }
 
-    override fun endStructure(desc: SerialDescriptor) = inp.expectAfterWhiteSpace('}')
+    override fun endStructure(descriptor: SerialDescriptor) = inp.expectAfterWhiteSpace('}')
 
-    override fun decodeElementIndex(desc: SerialDescriptor): Int {
+    override fun decodeElementIndex(descriptor: SerialDescriptor): Int {
         inp.skipWhitespace(',')
         val name = inp.nextUntil(':', '}')
         if (name.isEmpty())
             return CompositeDecoder.READ_DONE
-        val index = desc.getElementIndexOrThrow(name)
+        val index = descriptor.getElementIndexOrThrow(name)
         inp.expect(':')
         return index
     }
@@ -82,7 +83,7 @@ class KeyValueInput(val inp: Parser) : ElementValueDecoder() {
     override fun decodeFloat(): Float = readToken().toFloat()
     override fun decodeDouble(): Double = readToken().toDouble()
 
-    override fun decodeEnum(enumDescription: SerialDescriptor): Int {
+    override fun decodeEnum(enumDescriptor: SerialDescriptor): Int {
         return readToken().toInt()
     }
 

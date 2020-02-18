@@ -42,7 +42,7 @@ public abstract class AbstractDecoder : Decoder, CompositeDecoder {
     override fun decodeString(): String = decodeValue() as String
     override fun decodeEnum(enumDescriptor: SerialDescriptor): Int = decodeValue() as Int
 
-    // Delegating implementation of CompositeEncoder
+    // Delegating implementation of CompositeDecoder
 
     override fun beginStructure(descriptor: SerialDescriptor, vararg typeParams: KSerializer<*>): CompositeDecoder {
         return this

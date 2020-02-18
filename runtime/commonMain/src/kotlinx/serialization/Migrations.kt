@@ -8,16 +8,17 @@ import kotlinx.serialization.builtins.*
 import kotlinx.serialization.internal.*
 import kotlin.internal.*
 
+@Deprecated(level = DeprecationLevel.WARNING, message = "Not for public use, will be removed in the future release")
 public interface MigrationAid<T> : KSerializer<T> {
     override val descriptor: SerialDescriptor
-        get() = error("Please migrate deprecated API")
+        get() = error("Please from migrate deprecated API")
 
     override fun serialize(encoder: Encoder, value: T) {
-        error("Please migrate deprecated API")
+        error("Please migrate from deprecated API")
     }
 
     override fun deserialize(decoder: Decoder): T {
-        error("Please migrate deprecated API")
+        error("Please migrate from deprecated API")
     }
 }
 

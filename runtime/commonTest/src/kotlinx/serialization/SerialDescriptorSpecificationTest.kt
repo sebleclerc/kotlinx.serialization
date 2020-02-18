@@ -190,7 +190,7 @@ class SerialDescriptorSpecificationTest {
 
     @Test
     fun testUnitDescriptor() {
-        val descriptor = UnitSerializer.descriptor
+        val descriptor = UnitSerializer().descriptor
         assertEquals(StructureKind.OBJECT, descriptor.kind)
         assertFalse(descriptor.isNullable)
         assertEquals("kotlin.Unit", descriptor.serialName)

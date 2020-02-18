@@ -7,8 +7,8 @@ package kotlinx.serialization.protobuf
 import kotlinx.io.*
 import kotlinx.serialization.*
 import kotlinx.serialization.CompositeDecoder.Companion.READ_DONE
-import kotlinx.serialization.internal.*
 import kotlinx.serialization.builtins.*
+import kotlinx.serialization.internal.*
 import kotlinx.serialization.modules.*
 import kotlinx.serialization.protobuf.ProtoBuf.Varint.decodeSignedVarintInt
 import kotlinx.serialization.protobuf.ProtoBuf.Varint.decodeSignedVarintLong
@@ -511,7 +511,7 @@ public class ProtoBuf(
         }
     }
 
-    companion object : BinaryFormat {
+    companion object Default : BinaryFormat {
         public override val context: SerialModule get() = plain.context
 
         // todo: make more memory-efficient

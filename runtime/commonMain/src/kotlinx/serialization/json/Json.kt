@@ -8,7 +8,6 @@ import kotlinx.serialization.json.internal.*
 import kotlinx.serialization.modules.*
 import kotlin.jvm.*
 import kotlin.native.concurrent.*
-import kotlin.random.*
 import kotlin.reflect.*
 
 /**
@@ -164,7 +163,7 @@ public constructor(
      * The default instance of [Json] in the form of companion object.
      */
     @UnstableDefault
-    public companion object Default: StringFormat {
+    public companion object Default : StringFormat {
         private const val message =
             "Top-level JSON instances are deprecated for removal in the favour of user-configured one. " +
                     "You can either use a Json top-level object or configure your own instance  via 'Json {}' builder-like constructor"
