@@ -58,9 +58,9 @@ public fun serializer(type: KType): KSerializer<Any?> {
                     .map(::serializer)
                 // Array is not supported, see KT-32839
                 when (rootClass) {
-                    List::class, MutableList::class, ArrayList::class -> ArrayListSerializer(args[0])
+                    List::class, MutableList::class, ArrayList::class -> ListSerializer(args[0])
                     HashSet::class -> HashSetSerializer(args[0])
-                    Set::class, MutableSet::class, LinkedHashSet::class -> LinkedHashSetSerializer(args[0])
+                    Set::class, MutableSet::class, LinkedHashSet::class -> SetSerializer(args[0])
                     HashMap::class -> HashMapSerializer(args[0], args[1])
                     Map::class, MutableMap::class, LinkedHashMap::class -> LinkedHashMapSerializer(args[0], args[1])
                     Map.Entry::class -> MapEntrySerializer(args[0], args[1])
